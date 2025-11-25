@@ -17,7 +17,7 @@ public class App {
 
         HttpServer srv = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
 
-        // Contexto "catch-all" para rutas inexistentes
+        // Contexto "catch-all" para rutas inexistentes asi no cae en falla
         srv.createContext("/api/", ex -> {
             if (handleCorsPreflight(ex)) return;
             HttpJson.bad(ex, 404, "Not Found");
@@ -47,7 +47,6 @@ public class App {
                 HttpJson.bad(ex, 500, e.getMessage());
             }
         });
-
         // POST /api/enroll -> { ok, template }
         srv.createContext("/api/enroll", ex -> {
             if (handleCorsPreflight(ex)) return;
